@@ -1,0 +1,13 @@
+<h1> Poista tehtävä: </h1>
+
+<p> Oletko varma että haluat poistaa tämän tehtävän? - {{task}} </p>
+
+<form method="POST" action="">
+
+    {% csrf_token %}
+
+    <input type="submit" name="Poista">
+
+</form>
+
+<a href="{% url '' %}"> Peruuta </a>
