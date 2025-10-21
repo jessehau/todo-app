@@ -122,7 +122,9 @@
         <section class="form-container">
             <form method="POST" action="">
                 {% csrf_token %}
-                {{TaskForm}}
+                {{TaskForm.title}}
+                {{TaskForm.category}}
+                {{TaskForm.priority}}
                 <input class="btn" type="submit" value="Tallenna muutokset">
             </form>
         </section>

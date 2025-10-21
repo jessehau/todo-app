@@ -158,16 +158,18 @@
             <form method="POST" action="/">
                 {% csrf_token %}
                 {{TaskForm.title}}
+                {{TaskForm.category}}
+                {{TaskForm.priority}}
                 <input class="btn" type="submit" value="Luo tehtävä">
             </form>
         </section>
 
         <section>
             {% for task in tasks %}
-                <article class="task {% if task.completed %}completed{% endif %}">
+                <article class="task {% if task.complete %}completed{% endif %}">
                     <div class="task__title">{{task}}</div>
                     
-                    {% if task.completed == True %}
+                    {% if task.complete == True %}
                         <div class="task__status completed">Suoritettu</div>
                     {% else %}
                         <div class="task__status">Tehtävää ei vielä suoritettu</div>

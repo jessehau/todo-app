@@ -62,3 +62,9 @@ def deleteTask(request, pk):
     context = {'task': task}
 
     return render(request, 'delete-task.html', context)
+
+def toggleComplete(request, pk):
+    task = Task.objects.get(id=pk)
+    task.complete = not task.complete
+    task.save()
+    return redirect('/')

@@ -10,6 +10,6 @@ urlpatterns = [
 
     path('delete-task/<str:pk>/', views.deleteTask, name="delete-task"),
 
-
+    path('toggle-complete/<str:pk>/', views.toggleComplete, name='toggle-complete'),
 
 ]
