@@ -1,34 +1,185 @@
-<h1> Tehtävät: </h1>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehtävienhallinta</title>
+    <style>
+        :root {
+            --bg: #0B1220;
+            --card: #0F1724;
+            --text: #E6EEF8;
+            --muted: #94A3B8;
+            --accent: #3B82F6;
+            --success: #16A34A;
+            --warn: #F59E0B;
+            --danger: #EF4444;
+        }
 
-<form method="POST" action="/">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    {% csrf_token %}
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
 
-    {{TaskForm.title}}
+        header {
+            background-color: var(--card);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
 
-    <input class="btn" type="submit" name="Luo tehtävä:">
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+        }
 
-</form>
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
 
+        .task-form {
+            background-color: var(--card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
 
-{% for task in tasks %}
+        .task-form input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg);
+            border: 1px solid var(--muted);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
 
-    <p> {{task}} </p>
+        .task-form input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
 
-    {% if task.completed == True %}
+        .task-form input[type="text"]::placeholder {
+            color: var(--muted);
+        }
 
-        <p> Suoritettu </p>
+        .btn {
+            background-color: var(--accent);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-        
-    {% else %}
+        .btn:hover {
+            background-color: #2563EB;
+        }
 
-        <p>Tehtävää ei vielä suoritettu </p>
+        .task {
+            background-color: var(--card);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
 
-    {% endif %}
+        .task__title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
 
-    <a href="{% url 'update-task' task.id %}"> Muuta </a>
-    <br>
-    <a href="{% url 'delete-task' task.id %}"> Poista </a>
-    <hr>
+        .task__status {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+        }
 
-{% endfor %}
+        .task__status.completed {
+            color: var(--success);
+        }
+
+        .task__actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .task__actions a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .task__actions a:hover {
+            text-decoration: underline;
+        }
+
+        .task__actions a:last-child {
+            color: var(--danger);
+        }
+
+        .task.completed .task__title {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tehtävienhallinta</h1>
+    </header>
+
+    <main>
+        <section class="task-form">
+            <form method="POST" action="/">
+                {% csrf_token %}
+                {{TaskForm.title}}
+                <input class="btn" type="submit" value="Luo tehtävä">
+            </form>
+        </section>
+
+        <section>
+            {% for task in tasks %}
+                <article class="task {% if task.completed %}completed{% endif %}">
+                    <div class="task__title">{{task}}</div>
+                    
+                    {% if task.completed == True %}
+                        <div class="task__status completed">Suoritettu</div>
+                    {% else %}
+                        <div class="task__status">Tehtävää ei vielä suoritettu</div>
+                    {% endif %}
+
+                    <div class="task__actions">
+                        <a href="{% url 'update-task' task.id %}">Muuta</a>
+                        <a href="{% url 'delete-task' task.id %}">Poista</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
