@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
 
-    path('', views.index, name=""),
+    path('', views.index, name="tasks"),
 
     path('update-task/<str:pk>/', views.updateTask, name="update-task"),
 

@@ -115,7 +115,7 @@
 </head>
 <body>
     <header>
-        <h1>Muuta tehtävä</h1>
+        <h2>Muuta tehtävä</h2>
     </header>
 
     <main>
@@ -125,6 +125,9 @@
                 {{TaskForm.title}}
                 {{TaskForm.category}}
                 {{TaskForm.priority}}
+                <label>
+                    {{TaskForm.complete}}
+                </label>
                 <input class="btn" type="submit" value="Tallenna muutokset">
             </form>
         </section>

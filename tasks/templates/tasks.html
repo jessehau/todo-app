@@ -1,187 +1,132 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tehtävienhallinta</title>
-    <style>
-        :root {
-            --bg: #0B1220;
-            --card: #0F1724;
-            --text: #E6EEF8;
-            --muted: #94A3B8;
-            --accent: #3B82F6;
-            --success: #16A34A;
-            --warn: #F59E0B;
-            --danger: #EF4444;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tehtävienhallinta</title>
+<style>
+:root {
+    --bg: #0B1220;
+    --card: #0F1724;
+    --text: #E6EEF8;
+    --muted: #94A3B8;
+    --accent: #3B82F6;
+    --success: #16A34A;
+    --warn: #F59E0B;
+    --danger: #EF4444;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 14px;
+}
 
-        header {
-            background-color: var(--card);
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-        }
+header {
+    background: var(--card);
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
 
-        h1 {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text);
-        }
+h1 { font-size: 22px; }
 
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+main { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-        .task-form {
-            background-color: var(--card);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(59, 130, 246, 0.15);
-        }
+.task-form {
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
 
-        .task-form input[type="text"] {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background-color: var(--bg);
-            border: 1px solid var(--muted);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 14px;
-            margin-bottom: 1rem;
-        }
+.task-form input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
 
-        .task-form input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
+.btn {
+    background: var(--accent);
+    color: var(--text);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
 
-        .task-form input[type="text"]::placeholder {
-            color: var(--muted);
-        }
+.btn:hover { background: #2563EB; }
 
-        .btn {
-            background-color: var(--accent);
-            color: var(--text);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-        }
+.task {
+    background: var(--card);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
 
-        .btn:hover {
-            background-color: #2563EB;
-        }
+.task__title { font-weight: 600; }
+.task__priority { color: var(--warn); margin-left: 0.5rem; }
+.task__category { color: var(--accent); margin-left: 0.5rem; }
+.task__status { margin-left: auto; color: var(--muted); font-size: 13px; }
+.task__status.completed { color: var(--success); }
+.task.completed .task__title { opacity: 0.6; text-decoration: line-through; }
 
-        .task {
-            background-color: var(--card);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
+.task__actions { display: flex; gap: 1rem; margin-left: 1rem; }
+.task__actions a { color: var(--accent); text-decoration: none; font-size: 13px; }
+.task__actions a:last-child { color: var(--danger); }
 
-        .task__title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .task__status {
-            font-size: 13px;
-            color: var(--muted);
-            margin-bottom: 0.75rem;
-        }
-
-        .task__status.completed {
-            color: var(--success);
-        }
-
-        .task__actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .task__actions a {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .task__actions a:hover {
-            text-decoration: underline;
-        }
-
-        .task__actions a:last-child {
-            color: var(--danger);
-        }
-
-        .task.completed .task__title {
-            opacity: 0.6;
-            text-decoration: line-through;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-            margin: 1rem 0;
-        }
-    </style>
+</style>
 </head>
 <body>
-    <header>
-        <h1>Tehtävienhallinta</h1>
-    </header>
+<header>
+    <h1>Tehtävienhallinta</h1>
+</header>
 
-    <main>
-        <section class="task-form">
-            <form method="POST" action="/">
-                {% csrf_token %}
-                {{TaskForm.title}}
-                {{TaskForm.category}}
-                {{TaskForm.priority}}
-                <input class="btn" type="submit" value="Luo tehtävä">
-            </form>
-        </section>
+<main>
+<section class="task-form">
+    <form method="POST" action="/">
+        {% csrf_token %}
+        {{ TaskForm.title }}
+        {{ TaskForm.category }}
+        {{ TaskForm.priority }}
+        <label>{{ TaskForm.complete }}</label>
+        <input class="btn" type="submit" value="Luo tehtävä">
+    </form>
+</section>
 
-        <section>
-            {% for task in tasks %}
-                <article class="task {% if task.complete %}completed{% endif %}">
-                    <div class="task__title">{{task}}</div>
-                    
-                    {% if task.complete == True %}
-                        <div class="task__status completed">Suoritettu</div>
-                    {% else %}
-                        <div class="task__status">Tehtävää ei vielä suoritettu</div>
-                    {% endif %}
+<section>
+{% for task in tasks %}
+<article class="task {% if task.complete %}completed{% endif %}">
+    <form method="POST" action="{% url 'toggle-complete' task.id %}">
+        {% csrf_token %}
+        <input type="checkbox" name="complete" onChange="this.form.submit()" {% if task.complete %}checked{% endif %}>
+    </form>
 
-                    <div class="task__actions">
-                        <a href="{% url 'update-task' task.id %}">Muuta</a>
-                        <a href="{% url 'delete-task' task.id %}">Poista</a>
-                    </div>
-                </article>
-            {% endfor %}
-        </section>
-    </main>
+    <span class="task__title">{{ task.title }}</span>
+    <span class="task__priority">({{ task.priority }})</span>
+    <span class="task__category">[{{ task.category }}]</span>
+
+    <div class="task__status {% if task.complete %}completed{% endif %}">
+        {% if task.complete %}Suoritettu{% else %}Tehtävää ei vielä suoritettu{% endif %}
+    </div>
+
+    <div class="task__actions">
+        <a href="{% url 'update-task' task.id %}">Muuta</a>
+        <a href="{% url 'delete-task' task.id %}">Poista</a>
+    </div>
+</article>
+{% endfor %}
+</section>
+</main>
 </body>
 </html>
