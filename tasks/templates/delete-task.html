@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poista tehtävä</title>
+    <style>
+        :root {
+            --bg: #0B1220;
+            --card: #0F1724;
+            --text: #E6EEF8;
+            --muted: #94A3B8;
+            --accent: #3B82F6;
+            --success: #16A34A;
+            --warn: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: var(--card);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--danger);
+        }
+
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .warning-container {
+            background-color: var(--card);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .warning-message {
+            color: var(--text);
+            font-size: 15px;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .task-name {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-delete {
+            background-color: var(--danger);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-delete:hover {
+            background-color: #DC2626;
+        }
+
+        .btn-cancel {
+            background-color: transparent;
+            color: var(--accent);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cancel:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Poista tehtävä</h1>
+    </header>
+
+    <main>
+        <section class="warning-container">
+            <p class="warning-message">
+                Oletko varma että haluat poistaa tämän tehtävän? 
+                <span class="task-name">{{task}}</span>
+            </p>
+
+            <div class="button-group">
+               
+                <form method="POST" action="" style="display: inline;">
+                    {% csrf_token %}
+                    <input class="btn-delete" type="submit" value="Poista">
+                </form>
+
+                <a class="btn-cancel" href="{% url '' %}">Peruuta</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
